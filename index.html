@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div>Vue</div>
+    <script src="vue.js"></script>
+    <script>
+        const app = new Vue({
+            data: {
+                foo: 'foo',
+                bar: { mua: 'mua' }
+            }
+        })
+        app.$data.foo = 'newFoo'
+        app.$data.bar.mua = 'newMua'
+    </script>
+</body>
+</html>
