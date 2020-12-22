@@ -38,7 +38,7 @@ class Vue {
     }
 }
 
-class Dsp {}
+class Dep {}
 
 class Watcher {}
 
