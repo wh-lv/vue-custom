@@ -10,10 +10,17 @@ class Bus {
     }
 
     $on (eventName, cb) {
-        this.fnArr = this.fnArr || {}
+        this.fnArr[eventName] = this.fnArr[eventName] || []
+        this.fnArr[eventName].push(cb)
     }
 
-    $emit () {}
+    $emit (eventName, ...arg) {
+        if (this.fnArr[eventName]) {
+            this.fnArr[eventName].forEach(cb => {
+                cb(...arg)
+            })
+        }
+    }
 
     $off () {}
 }
