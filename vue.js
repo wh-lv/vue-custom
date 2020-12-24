@@ -9,10 +9,15 @@ class Vue {
         // 响应化处理（数据的拦截处理）
         this.observe(this.$data)
 
-        new Watcher(this, 'foo')
-        this.foo
-        new Watcher(this, 'bar.mua')
-        this.bar.mua
+        // new Watcher(this, 'foo')
+        // this.foo
+        // new Watcher(this, 'bar.mua')
+        // this.bar.mua
+
+        new Compile(options.el, this)
+        if (options.created) {
+            options.created.call(this)
+        }
     } 
 
     observe (data) {
@@ -43,7 +48,6 @@ class Vue {
             set (newVal) {
                 if (newVal !== val) {
                     val = newVal
-                    // console.log(key + '属性更新了');
                     dep.notify()
                 }
             }
@@ -79,15 +83,20 @@ class Dep {
 
 // 创建 Watcher：保存 data 中的数值和页面中的挂钩关系
 class Watcher {
-    constructor (vm, key) {
+    constructor (vm, key, cb) {
         // 创建实例时立即将该实例指向 Dep.target，便于依赖收集
-        Dep.target = this
         this.vm = vm
         this.key = key
+        this.cb = cb
+
+        Dep.target = this
+        this.vm[this.key]
+        Dep.target = null
     }
 
     update () {
         console.log(this.key + '更新了！')
+        this.cb.call(this.vm, this.vm[this.key])
     }
 }
 

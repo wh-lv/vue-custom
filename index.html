@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
+
 <body>
-    <div>Vue</div>
-    <script src="vue.js"></script>
+    <div id="app">
+        <p>{{name}}</p>
+        <p k-text="name"></p>
+        <p>{{age}}</p>
+        <input type="text" k-model="name">
+        <button @click="changeName">呵呵</button>
+        <div k-html="html"></div>
+    </div>
+    <script src='./vue.js'></script>
+    <script src='./compile.js'></script>
     <script>
-        const app = new Vue({
+        const kaikeba = new Vue({
+            el: '#app',
             data: {
-                foo: 'foo',
-                bar: { mua: 'mua' }
+                name: "I am test.",
+                age: 12,
+                html: '<button>这是⼀个按钮</button>'
+            },
+            created() {
+                console.log('this.name: ', this.name)
+                console.log('开始啦')
+                setTimeout(() => {
+                    this.name = '我是测试'
+                }, 1500)
+            },
+            methods: {
+                changeName() {
+                    this.name = '哈喽，开课吧'
+                    this.age = 1
+                }
             }
         })
-        app.foo = 'newFoo'
-        app.bar.mua = 'newMua'
-        console.log(app.$data)
     </script>
 </body>
+
 </html>
