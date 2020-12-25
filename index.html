@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Vue</title>
 </head>
 
 <body>
@@ -13,6 +13,7 @@
         <p>{{name}}</p>
         <p k-text="name"></p>
         <p>{{age}}</p>
+        <p>{{foo.mua}}</p>
         <input type="text" k-model="name">
         <button @click="changeName">呵呵</button>
         <div k-html="html"></div>
@@ -25,7 +26,7 @@
             data: {
                 name: "I am test.",
                 age: 12,
-                html: '<button>这是⼀个按钮</button>'
+                html: '<button>这是⼀个按钮</button>',
             },
             created() {
                 console.log('this.name: ', this.name)

@@ -45,7 +45,24 @@ class Compile {
     }
 
     compileElement (node) {
+        const attributes = node.attributes
+        Array.from(attributes).forEach(attr => {
+            // k-xxx="yyy"
+            const attrName = attr.name
+            const exp = attr.value
+            if (attrName.indexOf('k-') === 0) {
+                const dir = attrName.substring(2)
+                this[dir] && this[dir](node, exp)
+            }
+        })
+    }
 
+    text (node, exp) {
+        this.update(node, exp, 'text')
+    }
+
+    model (node, exp) {
+        
     }
 
     compileText (node) {
