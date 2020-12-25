@@ -53,16 +53,34 @@ class Compile {
             if (attrName.indexOf('k-') === 0) {
                 const dir = attrName.substring(2)
                 this[dir] && this[dir](node, exp)
+            } else if (attrName.indexOf('@') === 0) {
+                // 事件类型
+                const dir = attrName.substring(1)
+                this.eventHandler(node, exp, dir)
             }
         })
+    }
+
+    eventHandler (node, exp, dir) {
+        const fn = this.$vm.$options.methods && this.$vm.$options.methods[exp]
+        if (dir && fn) {
+            node.addEventListener(dir, fn.bind(this.$vm))
+        }
     }
 
     text (node, exp) {
         this.update(node, exp, 'text')
     }
 
+    html (node, exp) {
+        this.update(node, exp, 'html')
+    }
+
     model (node, exp) {
-        
+        this.update(node, exp, 'model')
+        node.addEventListener('input', e => {
+            this.$vm[exp] = e.target.value
+        })
     }
 
     compileText (node) {
@@ -81,5 +99,13 @@ class Compile {
 
     textUpdator (node, value) {
         node.textContent = value
+    }
+
+    htmlUpdator (node, value) {
+        node.innerHTML = value
+    }
+
+    modelUpdator (node, value) {
+        node.value = value
     }
 }
